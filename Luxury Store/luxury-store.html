@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Store — Perfumes Originales</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--warm:#FAF8F4;--gold:#B8975A;--gold-l:#D4B578;
+  --dark:#1A1610;--dark2:#2E2820;--mid:#6B5E4A;--light:#9C8E7A;
+  --border:rgba(184,151,90,0.18);--shadow:rgba(26,22,16,0.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--warm);color:var(--dark);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cur,.cur-r{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%}
+.cur{width:7px;height:7px;background:var(--gold)}
+.cur-r{width:28px;height:28px;border:1px solid var(--gold);z-index:9998;transform:translate(-10px,-10px);transition:transform .35s ease}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;transition:all .4s}
+nav.sc{background:rgba(250,248,244,.96);backdrop-filter:blur(14px);padding:1rem 4rem;border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:.12em;color:var(--dark);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.72rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem}
+.htag{font-size:.68rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
+.htag::before{content:'';width:40px;height:1px;background:var(--gold)}
+.htitle{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,5.5vw,5.5rem);font-weight:300;line-height:1.05;margin-bottom:2rem}
+.htitle em{font-style:italic;color:var(--gold)}
+.hdesc{font-size:.88rem;font-weight:200;line-height:1.9;color:var(--mid);max-width:360px;margin-bottom:3rem}
+.btn-dark{display:inline-flex;align-items:center;gap:1rem;padding:.9rem 2rem;background:var(--dark);color:var(--cream);font-size:.72rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--dark);transition:all .35s;width:fit-content;cursor:none}
+.btn-dark:hover{background:transparent;color:var(--dark)}
+.btn-dark:hover svg{transform:translateX(6px)}
+.btn-dark svg{transition:transform .3s}
+.hero-r{background:var(--cream);position:relative;overflow:hidden}
+.hero-r::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(184,151,90,.12) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(184,151,90,.08) 0%,transparent 50%)}
+.hero-orn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;height:360px;border:1px solid var(--border);border-radius:50%;animation:spin 30s linear infinite}
+.hero-orn::before{content:'';position:absolute;inset:20px;border:1px solid var(--border);border-radius:50%}
+.hero-glyph{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:8rem;font-weight:300;color:rgba(184,151,90,.15);animation:fl 6s ease-in-out infinite;user-select:none}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes fl{0%,100%{transform:translate(-50%,-52%)} 50%{transform:translate(-50%,-48%)}}
+
+/* STATS */
+.stats{background:var(--dark);display:grid;grid-template-columns:repeat(3,1fr)}
+.stat{padding:2.5rem 3rem;border-right:1px solid rgba(255,255,255,.06);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--gold-l);display:block;margin-bottom:.4rem}
+.stat-l{font-size:.68rem;font-weight:200;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+
+/* SECTION */
+section{padding:6rem 4rem}
+.stag{font-size:.68rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.stag::before{content:'';width:40px;height:1px;background:var(--gold)}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;line-height:1.1;color:var(--dark)}
+.stitle em{font-style:italic;color:var(--gold)}
+
+/* FILTERS */
+.catalog{background:var(--warm)}
+.cat-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem}
+.search-box{display:flex;align-items:center;gap:.75rem;padding:.7rem 1.2rem;border:1px solid var(--border);background:var(--cream)}
+.search-box input{border:none;background:transparent;font-family:'Jost',sans-serif;font-size:.82rem;font-weight:200;color:var(--dark);outline:none;width:220px}
+.search-box input::placeholder{color:var(--light)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.fbtn{padding:.5rem 1.2rem;border:1px solid var(--border);background:transparent;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);cursor:none;transition:all .25s}
+.fbtn:hover,.fbtn.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+
+/* BRAND SECTIONS */
+.brand-section{margin-bottom:3rem}
+.brand-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.brand-logo-img{width:70px;height:46px;object-fit:contain;filter:grayscale(1);opacity:.7;transition:all .3s}
+.brand-logo-img:hover{filter:grayscale(0);opacity:1}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--dark)}
+.brand-count{font-size:.68rem;font-weight:200;letter-spacing:.2em;color:var(--light);text-transform:uppercase;margin-left:auto}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px}
+
+/* PRODUCT CARD */
+.pc{background:var(--cream);padding:0;position:relative;overflow:hidden;transition:transform .4s;cursor:none}
+.pc:hover{transform:translateY(-3px)}
+.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.pc:hover::after{transform:scaleX(1)}
+.pc-img-wrap{width:100%;height:180px;overflow:hidden;background:#F0EBE1;display:flex;align-items:center;justify-content:center}
+.pc-img{width:100%;height:100%;object-fit:contain;padding:1rem;transition:transform .5s}
+.pc-img-wrap:hover .pc-img{transform:scale(1.05)}
+.pc-img-placeholder{font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(184,151,90,.25);user-select:none}
+.pc-body{padding:1rem 1.2rem 1.5rem}
+.pc-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--dark);line-height:1.3;margin-bottom:.4rem}
+.pc-sub{font-size:.72rem;font-weight:200;color:var(--light);line-height:1.5}
+.pc-badge{position:absolute;top:.75rem;right:.75rem;background:var(--gold);color:var(--dark);font-size:.58rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .6rem}
+
+/* ABOUT */
+.about{background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-vis{position:relative;height:460px}
+.ab1{position:absolute;top:0;left:0;right:3rem;bottom:3rem;background:var(--dark2);border:1px solid rgba(184,151,90,.2);display:flex;align-items:center;justify-content:center}
+.ab2{position:absolute;bottom:0;right:0;width:160px;height:160px;background:var(--gold);display:flex;align-items:center;justify-content:center}
+.ab-mon{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:rgba(184,151,90,.15)}
+.ab-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--dark)}
+.about-content .stitle{color:var(--cream)}
+.about-content .stitle em{color:var(--gold-l)}
+.about-text{font-size:.88rem;font-weight:200;line-height:2;color:rgba(255,255,255,.45);margin:2rem 0}
+.about-list{list-style:none;display:flex;flex-direction:column;gap:.9rem}
+.about-list li{font-size:.78rem;font-weight:200;letter-spacing:.1em;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:1rem}
+.about-list li::before{content:'';width:20px;height:1px;background:var(--gold);flex-shrink:0}
+
+/* CONTACT */
+.contact{background:var(--cream);text-align:center}
+.contact .stag{justify-content:center}
+.contact .stag::before{display:none}
+.contact .stitle{margin:0 auto 1rem}
+.contact-sub{font-size:.88rem;font-weight:200;color:var(--light);line-height:1.9;margin-bottom:3.5rem}
+.contact-cards{display:flex;justify-content:center;gap:2px;max-width:700px;margin:0 auto}
+.cc{flex:1;background:var(--warm);padding:2.5rem 1.5rem;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:.9rem;border:1px solid transparent;transition:all .3s;cursor:none}
+.cc:hover{background:var(--dark);border-color:var(--dark)}
+.cc:hover .cc-icon,.cc:hover .cc-val{color:var(--cream)}
+.cc:hover .cc-label{color:rgba(255,255,255,.4)}
+.cc-icon{font-size:1.4rem;color:var(--gold)}
+.cc-label{font-size:.65rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--light);transition:color .3s}
+.cc-val{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--dark);transition:color .3s}
+
+/* FOOTER */
+footer{background:var(--dark);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05)}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;letter-spacing:.12em;color:var(--cream)}
+.flogo span{color:var(--gold)}
+.fcopy{font-size:.68rem;font-weight:200;letter-spacing:.14em;color:rgba(255,255,255,.28);text-transform:uppercase}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.vis{opacity:1;transform:none}
+.rv1{transition-delay:.1s}.rv2{transition-delay:.2s}.rv3{transition-delay:.3s}
+
+/* HIDDEN brand sections */
+.brand-section.hidden{display:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem}
+  nav.sc{padding:.8rem 2rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-l{padding:7rem 2rem 3rem}
+  .hero-r{height:260px}
+  .stats{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  section{padding:4rem 1.5rem}
+  .cat-header{flex-direction:column;align-items:flex-start}
+  .about{grid-template-columns:1fr}
+  .about-vis{height:240px}
+  .contact-cards{flex-direction:column;max-width:100%}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Luxury<span>.</span>Store</a>
+  <ul class="nav-links">
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <p class="htag rv">Perfumes Originales · Costa Rica</p>
+    <h1 class="htitle rv rv1">El arte de<br>oler <em>extraordinario</em></h1>
+    <p class="hdesc rv rv2">Fragancias 100% originales de las casas más icónicas del mundo, a precios que te sorprenderán. Más de 60 marcas disponibles.</p>
+    <a href="#catalogo" class="btn-dark rv rv3">
+      Explorar catálogo
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+  <div class="hero-r">
+    <div class="hero-orn"></div>
+    <div class="hero-glyph">◈</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">+60</span><span class="stat-l">Marcas disponibles</span></div>
+  <div class="stat"><span class="stat-n">100%</span><span class="stat-l">Originales garantizados</span></div>
+  <div class="stat"><span class="stat-n">CR</span><span class="stat-l">Envíos a todo el país</span></div>
+</div>
+
+<!-- CATÁLOGO -->
+<section class="catalog" id="catalogo">
+  <div class="cat-header rv">
+    <div>
+      <p class="stag">Catálogo</p>
+      <h2 class="stitle">Nuestras <em>marcas</em></h2>
+    </div>
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#9C8E7A" stroke-width="1.2"/><path d="M10 10l2.5 2.5" stroke="#9C8E7A" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar perfume...">
+    </div>
+  </div>
+
+  <div class="filter-bar rv" id="filterBar">
+    <button class="fbtn active" data-filter="all">Todas</button>
+    <button class="fbtn" data-filter="abercrombie">Abercrombie</button>
+    <button class="fbtn" data-filter="afnan">Afnan</button>
+    <button class="fbtn" data-filter="al-haramain">Al Haramain</button>
+    <button class="fbtn" data-filter="animale">Animale</button>
+    <button class="fbtn" data-filter="antonio-banderas">A. Banderas</button>
+    <button class="fbtn" data-filter="ariana-grande">Ariana Grande</button>
+    <button class="fbtn" data-filter="armaf">Armaf</button>
+    <button class="fbtn" data-filter="armani">Armani</button>
+    <button class="fbtn" data-filter="azzaro">Azzaro</button>
+    <button class="fbtn" data-filter="bharara">Bharara</button>
+    <button class="fbtn" data-filter="bvlgari">Bvlgari</button>
+    <button class="fbtn" data-filter="burberry">Burberry</button>
+    <button class="fbtn" data-filter="calvin-klein">Calvin Klein</button>
+    <button class="fbtn" data-filter="carolina-herrera">C. Herrera</button>
+    <button class="fbtn" data-filter="chanel">Chanel</button>
+    <button class="fbtn" data-filter="clinique">Clinique</button>
+    <button class="fbtn" data-filter="curve">Curve</button>
+    <button class="fbtn" data-filter="dior">Dior</button>
+    <button class="fbtn" data-filter="dolce-gabbana">D&G</button>
+    <button class="fbtn" data-filter="givenchy">Givenchy</button>
+    <button class="fbtn" data-filter="gucci">Gucci</button>
+    <button class="fbtn" data-filter="guess">Guess</button>
+    <button class="fbtn" data-filter="halloween">Halloween</button>
+    <button class="fbtn" data-filter="hugo-boss">Hugo Boss</button>
+    <button class="fbtn" data-filter="issey-miyake">Issey Miyake</button>
+    <button class="fbtn" data-filter="jean-paul">Jean Paul G.</button>
+    <button class="fbtn" data-filter="jlo">J.Lo</button>
+    <button class="fbtn" data-filter="lacoste">Lacoste</button>
+    <button class="fbtn" data-filter="lancome">Lancôme</button>
+    <button class="fbtn" data-filter="lattafa">Lattafa</button>
+    <button class="fbtn" data-filter="maison-alhambra">M. Alhambra</button>
+    <button class="fbtn" data-filter="marc-jacobs">Marc Jacobs</button>
+    <button class="fbtn" data-filter="moschino">Moschino</button>
+    <button class="fbtn" data-filter="mont-blanc">Mont Blanc</button>
+    <button class="fbtn" data-filter="nautica">Nautica</button>
+    <button class="fbtn" data-filter="paco-rabanne">Paco Rabanne</button>
+    <button class="fbtn" data-filter="paris-hilton">Paris Hilton</button>
+    <button class="fbtn" data-filter="perry-ellis">Perry Ellis</button>
+    <button class="fbtn" data-filter="prada">Prada</button>
+    <button class="fbtn" data-filter="ralph-lauren">Ralph Lauren</button>
+    <button class="fbtn" data-filter="rasasi">Rasasi</button>
+    <button class="fbtn" data-filter="tommy">Tommy Hilfiger</button>
+    <button class="fbtn" data-filter="tous">Tous</button>
+    <button class="fbtn" data-filter="valentino">Valentino</button>
+    <button class="fbtn" data-filter="versace">Versace</button>
+    <button class="fbtn" data-filter="victoria-secret">Victoria's Secret</button>
+    <button class="fbtn" data-filter="ysl">YSL</button>
+    <button class="fbtn" data-filter="otros">Otros</button>
+  </div>
+
+  <div id="catalogContainer"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="nosotros">
+  <div class="about-vis rv">
+    <div class="ab1"><span class="ab-mon">LS</span></div>
+    <div class="ab2"><span class="ab-num">100%</span></div>
+  </div>
+  <div class="about-content">
+    <p class="stag rv">Nuestra promesa</p>
+    <h2 class="stitle rv rv1">Autenticidad que <em>puedes sentir</em></h2>
+    <p class="about-text rv rv2">En Luxury Store creemos que cada persona merece acceder a fragancias de clase mundial. Cada perfume que ofrecemos es 100% original, directo de distribuidores certificados.</p>
+    <ul class="about-list rv rv3">
+      <li>Perfumes 100% originales, siempre</li>
+      <li>Más de 60 marcas internacionales</li>
+      <li>Atención personalizada y honesta</li>
+      <li>Envíos seguros a todo Costa Rica</li>
+      <li>Garantía de autenticidad en cada compra</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <p class="stag">Contacto</p>
+  <h2 class="stitle rv">¿Lista para tu próxima <em>fragancia?</em></h2>
+  <p class="contact-sub rv rv1">Escríbenos y te asesoramos sin compromiso.<br>Encontramos el perfume perfecto para ti.</p>
+  <div class="contact-cards">
+    <a href="https://wa.me/50688422928" target="_blank" class="cc rv">
+      <span class="cc-icon">✆</span>
+      <span class="cc-label">WhatsApp</span>
+      <span class="cc-val">8842 2928</span>
+    </a>
+    <a href="mailto:luxuryscents3@gmail.com" class="cc rv rv1">
+      <span class="cc-icon">✉</span>
+      <span class="cc-label">Correo</span>
+      <span class="cc-val">luxuryscents3@gmail.com</span>
+    </a>
+    <a href="https://instagram.com/luxury_store_sr" target="_blank" class="cc rv rv2">
+      <span class="cc-icon">◈</span>
+      <span class="cc-label">Instagram</span>
+      <span class="cc-val">@luxury_store_sr</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="flogo">Luxury<span>.</span>Store</span>
+  <span class="fcopy">© 2025 Luxury Store · Perfumes Originales · Costa Rica</span>
+</footer>
+
+<script>
+// Brand data with products and image URLs
+const brands = [
+  {
+    id:'abercrombie',name:'Abercrombie & Fitch',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Abercrombie_%26_Fitch_Logo.svg/320px-Abercrombie_%26_Fitch_Logo.svg.png',
+    products:[
+      {name:'100% Passion Men',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/100-passion-men/posters/medium/1001095.jpg'},
+      {name:'100% Passion Mujer',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/100-passion-women/posters/medium/1001096.jpg'},
+      {name:'Authentic Self',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/authentic-self/posters/medium/1001555.jpg'},
+      {name:'Away Weekend',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/away-weekend/posters/medium/1001556.jpg'},
+      {name:'Femme Celeste',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/femme-celeste/posters/medium/1001557.jpg'},
+      {name:'Fierce 100ML',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/fierce/posters/medium/100745.jpg'},
+      {name:'Fierce 200ML',img:'https://img.fragrancenet.com/perfumes/abercrombie-fitch/fierce/posters/medium/100745.jpg'},
+    ]
+  },
+  {
+    id:'afnan',name:'Afnan',
+    logo:'https://cdn.scentbird.com/frontbird/brand-logos/afnan.svg',
+    products:[
+      {name:'9AM',img:'https://img.fragrancenet.com/perfumes/afnan/9am/posters/medium/1007079.jpg'},
+      {name:'9AM Dive',img:'https://img.fragrancenet.com/perfumes/afnan/9am-dive/posters/medium/1007080.jpg'},
+      {name:'9PM',img:'https://img.fragrancenet.com/perfumes/afnan/9pm/posters/medium/1007081.jpg'},
+      {name:'9PM Elixir Parfum',img:'https://img.fragrancenet.com/perfumes/afnan/9pm-elixir/posters/medium/1007082.jpg'},
+      {name:'9PM Pour Femme',img:'https://img.fragrancenet.com/perfumes/afnan/9pm-pour-femme/posters/medium/1007083.jpg'},
+      {name:'Souvenir Desert Rose',img:'https://img.fragrancenet.com/perfumes/afnan/souvenir-desert-rose/posters/medium/1007084.jpg'},
+    ]
+  },
+  {
+    id:'al-haramain',name:'Al Haramain',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Al_Haramain_Logo.png/320px-Al_Haramain_Logo.png',
+    products:[
+      {name:'Amber Oud White Edition',img:'https://img.fragrancenet.com/perfumes/al-haramain/amber-oud-white-edition/posters/medium/1009001.jpg'},
+      {name:'Amber Oud 100ML',img:'https://img.fragrancenet.com/perfumes/al-haramain/amber-oud/posters/medium/1006500.jpg'},
+      {name:'Amber Oud Carbon Edition',img:'https://img.fragrancenet.com/perfumes/al-haramain/amber-oud-carbon-edition/posters/medium/1007500.jpg'},
+      {name:'Amber Oud Bleu Edition 200ML',img:'https://img.fragrancenet.com/perfumes/al-haramain/amber-oud-bleu-edition/posters/medium/1007501.jpg'},
+      {name:'Amber Oud Future Extracto',img:'https://img.fragrancenet.com/perfumes/al-haramain/amber-oud-future/posters/medium/1008500.jpg'},
+      {name:'Aqua Dubai',img:'https://img.fragrancenet.com/perfumes/al-haramain/aqua-dubai/posters/medium/1008501.jpg'},
+      {name:'L\'Aventure Intense',img:'https://img.fragrancenet.com/perfumes/al-haramain/laventure-intense/posters/medium/1007502.jpg'},
+      {name:'L\'Aventure Gold',img:'https://img.fragrancenet.com/perfumes/al-haramain/laventure-gold/posters/medium/1007503.jpg'},
+    ]
+  },
+  {
+    id:'animale',name:'Animale',
+    logo:'',
+    products:[
+      {name:'Animale For Men 100ML',img:'https://img.fragrancenet.com/perfumes/animale/animale-for-men/posters/medium/4048.jpg'},
+      {name:'Animale For Men 200ML',img:'https://img.fragrancenet.com/perfumes/animale/animale-for-men/posters/medium/4048.jpg'},
+    ]
+  },
+  {
+    id:'antonio-banderas',name:'Antonio Banderas',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Antonio_Banderas_logo.png/320px-Antonio_Banderas_logo.png',
+    products:[
+      {name:'Blue Seduction 100ML',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/blue-seduction-for-men/posters/medium/90267.jpg'},
+      {name:'Black Seduction 100ML',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/black-seduction/posters/medium/90268.jpg'},
+      {name:'King of Seduction',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/king-of-seduction/posters/medium/90269.jpg'},
+      {name:'King Absolute',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/king-of-seduction-absolute/posters/medium/90270.jpg'},
+      {name:'Power of Seduction',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/power-of-seduction/posters/medium/90271.jpg'},
+      {name:'The Icon Splendid',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/the-icon-splendid/posters/medium/1006510.jpg'},
+      {name:'The Icon Supreme',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/the-icon-supreme/posters/medium/1006511.jpg'},
+      {name:'Seduction X',img:'https://img.fragrancenet.com/perfumes/antonio-banderas/seduction-in-black/posters/medium/90272.jpg'},
+    ]
+  },
+  {
+    id:'ariana-grande',name:'Ariana Grande',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ariana_Grande_Perfume_Logo.png/320px-Ariana_Grande_Perfume_Logo.png',
+    products:[
+      {name:'Cloud',img:'https://img.fragrancenet.com/perfumes/ariana-grande/cloud/posters/medium/1004519.jpg',badge:'Bestseller'},
+      {name:'Cloud 2.0 Intense',img:'https://img.fragrancenet.com/perfumes/ariana-grande/cloud-20-intense/posters/medium/1010517.jpg'},
+      {name:'Cloud Pink',img:'https://img.fragrancenet.com/perfumes/ariana-grande/cloud-pink/posters/medium/1010518.jpg'},
+      {name:'Thank U Next',img:'https://img.fragrancenet.com/perfumes/ariana-grande/thank-u-next/posters/medium/1005528.jpg'},
+      {name:'Thank U Next 2.0',img:'https://img.fragrancenet.com/perfumes/ariana-grande/thank-u-next-20/posters/medium/1010519.jpg'},
+      {name:'Ari',img:'https://img.fragrancenet.com/perfumes/ariana-grande/ari/posters/medium/1001098.jpg'},
+      {name:'Moonlight',img:'https://img.fragrancenet.com/perfumes/ariana-grande/moonlight/posters/medium/1002999.jpg'},
+      {name:'Sweet Like Candy',img:'https://img.fragrancenet.com/perfumes/ariana-grande/sweet-like-candy/posters/medium/1002998.jpg'},
+      {name:'REM',img:'https://img.fragrancenet.com/perfumes/ariana-grande/rem/posters/medium/1006513.jpg'},
+      {name:'God Is a Woman',img:'https://img.fragrancenet.com/perfumes/ariana-grande/god-is-a-woman/posters/medium/1006514.jpg'},
+      {name:'Mood Blush',img:'https://img.fragrancenet.com/perfumes/ariana-grande/mood/posters/medium/1007525.jpg'},
+      {name:'Mood Vainilla',img:'https://img.fragrancenet.com/perfumes/ariana-grande/mood/posters/medium/1007526.jpg'},
+      {name:'Lovenotes Angels Kiss',img:'https://img.fragrancenet.com/perfumes/ariana-grande/lovenotes/posters/medium/1009505.jpg'},
+    ]
+  },
+  {
+    id:'armaf',name:'Armaf',
+    logo:'',
+    products:[
+      {name:'Club de Nuit Intense H',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-intense-man/posters/medium/1001100.jpg',badge:'Bestseller'},
+      {name:'Club de Nuit Bling',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-bling/posters/medium/1007087.jpg'},
+      {name:'Club de Nuit Iconic',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-iconic/posters/medium/1007088.jpg'},
+      {name:'Club de Nuit Untold 200ML',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-untold/posters/medium/1007089.jpg'},
+      {name:'Club de Nuit Urban Man Elixir',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-urban-man-elixir/posters/medium/1007090.jpg'},
+      {name:'Club de Nuit Woman',img:'https://img.fragrancenet.com/perfumes/armaf/club-de-nuit-women/posters/medium/1001101.jpg'},
+      {name:'Odyssey Mega',img:'https://img.fragrancenet.com/perfumes/armaf/odyssey-homme/posters/medium/1003000.jpg'},
+      {name:'Odyssey Bahamas',img:'https://img.fragrancenet.com/perfumes/armaf/odyssey-homme/posters/medium/1003001.jpg'},
+      {name:'Island Bliss',img:'https://img.fragrancenet.com/perfumes/armaf/island-bliss/posters/medium/1007091.jpg'},
+      {name:'Sillage 105ML',img:'https://img.fragrancenet.com/perfumes/armaf/sillage/posters/medium/1003002.jpg'},
+      {name:'Milestone',img:'https://img.fragrancenet.com/perfumes/armaf/milestone/posters/medium/1003003.jpg'},
+    ]
+  },
+  {
+    id:'armani',name:'Giorgio Armani',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Giorgio_Armani_logo.svg/320px-Giorgio_Armani_logo.svg.png',
+    products:[
+      {name:'Acqua di Gio EDP',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/acqua-di-gio/posters/medium/1007092.jpg',badge:'Icónico'},
+      {name:'Acqua di Gio Profondo',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/acqua-di-gio-profondo/posters/medium/1007093.jpg'},
+      {name:'Acqua di Gio Parfum 125ML',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/acqua-di-gio-parfum/posters/medium/1007094.jpg'},
+      {name:'Armani Code EDP',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/code-for-men/posters/medium/60059.jpg'},
+      {name:'Armani Code Parfum',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/code-parfum/posters/medium/1007095.jpg'},
+      {name:'Stronger with You Intensely',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/stronger-with-you-intensely/posters/medium/1005529.jpg'},
+      {name:'Stronger with You Absolu',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/stronger-with-you-absolutely/posters/medium/1005530.jpg'},
+      {name:'Si EDP',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/si/posters/medium/1001099.jpg'},
+      {name:'My Way',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/my-way/posters/medium/1006515.jpg'},
+      {name:'Because It\'s You',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/because-its-you/posters/medium/1004520.jpg'},
+      {name:'In Love With You',img:'https://img.fragrancenet.com/perfumes/giorgio-armani/in-love-with-you/posters/medium/1007096.jpg'},
+    ]
+  },
+  {
+    id:'azzaro',name:'Azzaro',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Azzaro_logo.svg/320px-Azzaro_logo.svg.png',
+    products:[
+      {name:'Chrome 100ML',img:'https://img.fragrancenet.com/perfumes/azzaro/chrome/posters/medium/7062.jpg'},
+      {name:'Chrome 200ML',img:'https://img.fragrancenet.com/perfumes/azzaro/chrome/posters/medium/7062.jpg'},
+      {name:'Pour Homme 100ML',img:'https://img.fragrancenet.com/perfumes/azzaro/azzaro-pour-homme/posters/medium/7063.jpg'},
+      {name:'Wanted by Night',img:'https://img.fragrancenet.com/perfumes/azzaro/wanted-by-night/posters/medium/1005531.jpg'},
+      {name:'The Most Wanted EDP Intense',img:'https://img.fragrancenet.com/perfumes/azzaro/the-most-wanted-edp-intense/posters/medium/1007097.jpg'},
+    ]
+  },
+  {
+    id:'bharara',name:'Bharara',
+    logo:'',
+    products:[
+      {name:'King 100ML',img:'https://img.fragrancenet.com/perfumes/bharara/king/posters/medium/1008502.jpg',badge:'Bestseller'},
+      {name:'King Soleil',img:'https://img.fragrancenet.com/perfumes/bharara/king-soleil/posters/medium/1009506.jpg'},
+      {name:'Bleu EDP',img:'https://img.fragrancenet.com/perfumes/bharara/bleu/posters/medium/1008503.jpg'},
+      {name:'Double Bleu 200ML',img:'https://img.fragrancenet.com/perfumes/bharara/double-bleu/posters/medium/1008504.jpg'},
+      {name:'Viking Dubai',img:'https://img.fragrancenet.com/perfumes/bharara/viking-dubai/posters/medium/1007098.jpg'},
+      {name:'Viking Cairo',img:'https://img.fragrancenet.com/perfumes/bharara/viking-cairo/posters/medium/1007099.jpg'},
+      {name:'Viking Kashmir',img:'https://img.fragrancenet.com/perfumes/bharara/viking-kashmir/posters/medium/1007100.jpg'},
+      {name:'Viking Beirut',img:'https://img.fragrancenet.com/perfumes/bharara/viking-beirut/posters/medium/1007101.jpg'},
+    ]
+  },
+  {
+    id:'bvlgari',name:'Bvlgari',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Bulgari_logo.svg/320px-Bulgari_logo.svg.png',
+    products:[
+      {name:'Man in Black EDP',img:'https://img.fragrancenet.com/perfumes/bvlgari/man-in-black/posters/medium/1001104.jpg'},
+      {name:'Omnia Amethyste 100ML',img:'https://img.fragrancenet.com/perfumes/bvlgari/omnia-amethyste/posters/medium/80093.jpg'},
+      {name:'Omnia Coral 100ML',img:'https://img.fragrancenet.com/perfumes/bvlgari/omnia-coral/posters/medium/80094.jpg'},
+      {name:'Omnia Crystalline 100ML',img:'https://img.fragrancenet.com/perfumes/bvlgari/omnia-crystalline/posters/medium/80095.jpg'},
+      {name:'Man Terrae Essence',img:'https://img.fragrancenet.com/perfumes/bvlgari/man-terrae-essence/posters/medium/1007102.jpg'},
+    ]
+  },
+  {
+    id:'burberry',name:'Burberry',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Burberry_logo.svg/320px-Burberry_logo.svg.png',
+    products:[
+      {name:'Her EDP',img:'https://img.fragrancenet.com/perfumes/burberry/burberry-her/posters/medium/1004521.jpg'},
+      {name:'Hero Parfum 100ML',img:'https://img.fragrancenet.com/perfumes/burberry/hero/posters/medium/1007103.jpg'},
+      {name:'Hero Parfum Intense',img:'https://img.fragrancenet.com/perfumes/burberry/hero-intense/posters/medium/1009507.jpg'},
+    ]
+  },
+  {
+    id:'calvin-klein',name:'Calvin Klein',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Calvin_Klein_logo.svg/320px-Calvin_Klein_logo.svg.png',
+    products:[
+      {name:'CK One 200ML',img:'https://img.fragrancenet.com/perfumes/calvin-klein/ck-one/posters/medium/4950.jpg'},
+      {name:'CKin2u Hombre',img:'https://img.fragrancenet.com/perfumes/calvin-klein/ckin2u-for-him/posters/medium/80096.jpg'},
+      {name:'CKin2u Mujer',img:'https://img.fragrancenet.com/perfumes/calvin-klein/ckin2u-for-her/posters/medium/80097.jpg'},
+      {name:'Eternity Moment',img:'https://img.fragrancenet.com/perfumes/calvin-klein/eternity-moment/posters/medium/50083.jpg'},
+      {name:'Euphoria Mujer',img:'https://img.fragrancenet.com/perfumes/calvin-klein/euphoria/posters/medium/70078.jpg'},
+      {name:'CK Shock Mujer',img:'https://img.fragrancenet.com/perfumes/calvin-klein/ck-shock-for-her/posters/medium/1001105.jpg'},
+    ]
+  },
+  {
+    id:'carolina-herrera',name:'Carolina Herrera',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Carolina_Herrera_logo.svg/320px-Carolina_Herrera_logo.svg.png',
+    products:[
+      {name:'Good Girl',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl/posters/medium/1003005.jpg',badge:'Bestseller'},
+      {name:'Good Girl Blush',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl-blush/posters/medium/1004522.jpg'},
+      {name:'Good Girl Blush Elixir',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl-blush-elixir/posters/medium/1007104.jpg'},
+      {name:'Good Girl Jasmine Absolu',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl-absolutely-good/posters/medium/1009508.jpg'},
+      {name:'Good Girl Very Good',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl-very-good/posters/medium/1010520.jpg'},
+      {name:'Good Girl Polka Paradise',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl/posters/medium/1003005.jpg'},
+      {name:'212 VIP Black',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/212-vip-black/posters/medium/1001106.jpg'},
+      {name:'212 VIP Rose 125ML',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/212-vip-rose/posters/medium/1001107.jpg'},
+      {name:'212 Heroes',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/212-heroes/posters/medium/1006517.jpg'},
+      {name:'212 Parfum 100ML',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/212-parfum/posters/medium/1009509.jpg'},
+      {name:'212 VIP Rose Elixir',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/212-vip-rose-elixir/posters/medium/1007105.jpg'},
+      {name:'Bad Boy Cobalt',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/bad-boy-cobalt/posters/medium/1007106.jpg'},
+      {name:'Bad Boy Extreme',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/bad-boy-extreme/posters/medium/1007107.jpg'},
+      {name:'La Bomba EDP',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/good-girl/posters/medium/1003005.jpg'},
+      {name:'CH Wild Love Men',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/ch-men/posters/medium/90275.jpg'},
+      {name:'Clásica Mujer 100ML',img:'https://img.fragrancenet.com/perfumes/carolina-herrera/herrera-for-women/posters/medium/7064.jpg'},
+    ]
+  },
+  {
+    id:'chanel',name:'Chanel',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Chanel_logo_interlocking_cs.svg/320px-Chanel_logo_interlocking_cs.svg.png',
+    products:[
+      {name:'Bleu de Chanel EDP',img:'https://img.fragrancenet.com/perfumes/chanel/bleu-de-chanel-edp/posters/medium/1001108.jpg',badge:'Icónico'},
+      {name:'Bleu de Chanel EDT',img:'https://img.fragrancenet.com/perfumes/chanel/bleu-de-chanel/posters/medium/1001109.jpg'},
+      {name:'Bleu de Chanel Parfum',img:'https://img.fragrancenet.com/perfumes/chanel/bleu-de-chanel-parfum/posters/medium/1004523.jpg'},
+      {name:'Chance Tendre EDP',img:'https://img.fragrancenet.com/perfumes/chanel/chance-eau-tendre/posters/medium/60060.jpg'},
+      {name:'Chance Eau Fraiche EDP',img:'https://img.fragrancenet.com/perfumes/chanel/chance-eau-fraiche/posters/medium/60061.jpg'},
+      {name:'Chance Eau Splendide',img:'https://img.fragrancenet.com/perfumes/chanel/chance-eau-splendide/posters/medium/1010521.jpg'},
+      {name:'Chance Tradicional EDP',img:'https://img.fragrancenet.com/perfumes/chanel/chance/posters/medium/30044.jpg'},
+      {name:'Coco Mademoiselle EDP',img:'https://img.fragrancenet.com/perfumes/chanel/coco-mademoiselle/posters/medium/40072.jpg'},
+      {name:'Coco Mademoiselle Intense',img:'https://img.fragrancenet.com/perfumes/chanel/coco-mademoiselle-intense/posters/medium/1001110.jpg'},
+      {name:'Coco Mademoiselle L\'Eau Privée',img:'https://img.fragrancenet.com/perfumes/chanel/coco-mademoiselle-leau-privee/posters/medium/1007108.jpg'},
+      {name:'N°5 EDP',img:'https://img.fragrancenet.com/perfumes/chanel/no-5/posters/medium/2074.jpg'},
+      {name:'Gabrielle EDP',img:'https://img.fragrancenet.com/perfumes/chanel/gabrielle/posters/medium/1004524.jpg'},
+      {name:'Allure Homme Sport',img:'https://img.fragrancenet.com/perfumes/chanel/allure-homme-sport/posters/medium/60062.jpg'},
+      {name:'Allure Homme Édition Blanche',img:'https://img.fragrancenet.com/perfumes/chanel/allure-homme-edition-blanche/posters/medium/80099.jpg'},
+      {name:'Platinum Égoïste',img:'https://img.fragrancenet.com/perfumes/chanel/egoiste-platinum/posters/medium/4951.jpg'},
+    ]
+  },
+  {
+    id:'clinique',name:'Clinique',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Clinique_logo.svg/320px-Clinique_logo.svg.png',
+    products:[
+      {name:'Happy For Men',img:'https://img.fragrancenet.com/perfumes/clinique/happy-for-men/posters/medium/10073.jpg'},
+      {name:'Happy Mujer',img:'https://img.fragrancenet.com/perfumes/clinique/happy-heart/posters/medium/10074.jpg'},
+      {name:'Happy Heart',img:'https://img.fragrancenet.com/perfumes/clinique/happy-heart/posters/medium/10074.jpg'},
+      {name:'Aromatics Elixir',img:'https://img.fragrancenet.com/perfumes/clinique/aromatics-elixir/posters/medium/2075.jpg'},
+    ]
+  },
+  {
+    id:'curve',name:'Curve',
+    logo:'',
+    products:[
+      {name:'Curve Wave Hombre',img:'https://img.fragrancenet.com/perfumes/curve/curve-wave-for-men/posters/medium/80100.jpg'},
+      {name:'Curve Wave Mujer',img:'https://img.fragrancenet.com/perfumes/curve/curve-wave-for-women/posters/medium/80101.jpg'},
+      {name:'Curve Connect Hombre',img:'https://img.fragrancenet.com/perfumes/curve/curve-connect-for-men/posters/medium/1001111.jpg'},
+      {name:'Curve Connect Mujer',img:'https://img.fragrancenet.com/perfumes/curve/curve-connect-for-women/posters/medium/1001112.jpg'},
+      {name:'Curve Chill Hombre',img:'https://img.fragrancenet.com/perfumes/curve/curve-chill-for-men/posters/medium/90276.jpg'},
+      {name:'Curve Chill Mujer',img:'https://img.fragrancenet.com/perfumes/curve/curve-chill-for-women/posters/medium/90277.jpg'},
+      {name:'Curve Crush Hombre',img:'https://img.fragrancenet.com/perfumes/curve/curve-crush/posters/medium/50084.jpg'},
+      {name:'Curve Sport',img:'https://img.fragrancenet.com/perfumes/curve/curve-sport/posters/medium/40073.jpg'},
+      {name:'Curve Tradicional Hombre 125ML',img:'https://img.fragrancenet.com/perfumes/curve/curve-for-men/posters/medium/7065.jpg'},
+    ]
+  },
+  {
+    id:'dior',name:'Dior',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Dior_logo.svg/320px-Dior_logo.svg.png',
+    products:[
+      {name:'Sauvage Parfum Eau Forte',img:'https://img.fragrancenet.com/perfumes/christian-dior/sauvage/posters/medium/1003006.jpg',badge:'Icónico'},
+      {name:'Miss Dior Parfum 80ML',img:'https://img.fragrancenet.com/perfumes/christian-dior/miss-dior-parfum/posters/medium/1007109.jpg'},
+      {name:'Miss Dior Blooming Bouquet',img:'https://img.fragrancenet.com/perfumes/christian-dior/miss-dior-blooming-bouquet/posters/medium/90278.jpg'},
+      {name:'Miss Dior Originale EDT',img:'https://img.fragrancenet.com/perfumes/christian-dior/miss-dior/posters/medium/7066.jpg'},
+      {name:'Jadore EDP',img:'https://img.fragrancenet.com/perfumes/christian-dior/j-adore/posters/medium/20051.jpg'},
+      {name:'Homme EDT',img:'https://img.fragrancenet.com/perfumes/christian-dior/dior-homme/posters/medium/70079.jpg'},
+      {name:'Homme Intense 150ML',img:'https://img.fragrancenet.com/perfumes/christian-dior/dior-homme-intense/posters/medium/80102.jpg'},
+      {name:'Addict',img:'https://img.fragrancenet.com/perfumes/christian-dior/dior-addict/posters/medium/30045.jpg'},
+    ]
+  },
+  {
+    id:'dolce-gabbana',name:'Dolce & Gabbana',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dolce_and_Gabbana_logo.svg/320px-Dolce_and_Gabbana_logo.svg.png',
+    products:[
+      {name:'Light Blue Men 100ML',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/light-blue-pour-homme/posters/medium/50085.jpg',badge:'Bestseller'},
+      {name:'Light Blue Mujer 100ML',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/light-blue/posters/medium/30046.jpg'},
+      {name:'Light Blue Intense H',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/light-blue-pour-homme-intense/posters/medium/1007110.jpg'},
+      {name:'The One EDP 100ML',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/the-one/posters/medium/80103.jpg'},
+      {name:'The Only One EDP',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/the-only-one/posters/medium/1004525.jpg'},
+      {name:'K EDP',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/k-by-dolce-gabbana/posters/medium/1004526.jpg'},
+      {name:'Devotion Men EDP',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/devotion-men-edp/posters/medium/1009511.jpg'},
+      {name:'Dolce Lily',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/dolce-lily/posters/medium/1007111.jpg'},
+      {name:'Imperátriz',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/imperatrice/posters/medium/80104.jpg'},
+      {name:'Q EDP Intense',img:'https://img.fragrancenet.com/perfumes/dolce-gabbana/q-by-dolce-gabbana/posters/medium/1010522.jpg'},
+    ]
+  },
+  {
+    id:'givenchy',name:'Givenchy',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Givenchy_logo.svg/320px-Givenchy_logo.svg.png',
+    products:[
+      {name:'L\'Interdit EDP',img:'https://img.fragrancenet.com/perfumes/givenchy/linterdit/posters/medium/1004527.jpg'},
+      {name:'Ángeles y Demonios',img:'https://img.fragrancenet.com/perfumes/givenchy/angel-demon/posters/medium/70080.jpg'},
+      {name:'Ángeles y Demonios Le Secret',img:'https://img.fragrancenet.com/perfumes/givenchy/angel-demon-le-secret/posters/medium/90279.jpg'},
+      {name:'Gentleman EDP Boisée',img:'https://img.fragrancenet.com/perfumes/givenchy/gentleman-givenchy-boisee/posters/medium/1007112.jpg'},
+      {name:'Pi',img:'https://img.fragrancenet.com/perfumes/givenchy/pi/posters/medium/10075.jpg'},
+    ]
+  },
+  {
+    id:'gucci',name:'Gucci',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/320px-1960s_Gucci_Logo.svg.png',
+    products:[
+      {name:'Flora Gorgeous Orchid',img:'https://img.fragrancenet.com/perfumes/gucci/flora-gorgeous-orchid/posters/medium/1009512.jpg'},
+    ]
+  },
+  {
+    id:'guess',name:'Guess',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Guess_logo.svg/320px-Guess_logo.svg.png',
+    products:[
+      {name:'Guess Mujer Tradicional',img:'https://img.fragrancenet.com/perfumes/guess/guess-for-women/posters/medium/7067.jpg'},
+      {name:'Guess Man',img:'https://img.fragrancenet.com/perfumes/guess/guess-for-men/posters/medium/7068.jpg'},
+      {name:'Guess Girl',img:'https://img.fragrancenet.com/perfumes/guess/guess-girl/posters/medium/90280.jpg'},
+      {name:'Guess 1981 Men',img:'https://img.fragrancenet.com/perfumes/guess/1981-for-men/posters/medium/1001113.jpg'},
+      {name:'Guess Dare Men',img:'https://img.fragrancenet.com/perfumes/guess/dare/posters/medium/1001114.jpg'},
+    ]
+  },
+  {
+    id:'halloween',name:'Halloween',
+    logo:'',
+    products:[
+      {name:'Halloween Clásica Mujer',img:'https://img.fragrancenet.com/perfumes/halloween/halloween/posters/medium/7069.jpg'},
+      {name:'Halloween Blue Drop',img:'https://img.fragrancenet.com/perfumes/halloween/blue-drop/posters/medium/1007113.jpg'},
+      {name:'Halloween Man X',img:'https://img.fragrancenet.com/perfumes/halloween/halloween-man-x/posters/medium/1001115.jpg'},
+      {name:'Halloween Man 125ML',img:'https://img.fragrancenet.com/perfumes/halloween/halloween-man/posters/medium/20052.jpg'},
+      {name:'Halloween Kiss',img:'https://img.fragrancenet.com/perfumes/halloween/kiss/posters/medium/80105.jpg'},
+      {name:'Halloween Freesia',img:'https://img.fragrancenet.com/perfumes/halloween/freesia/posters/medium/80106.jpg'},
+      {name:'Halloween Blossom',img:'https://img.fragrancenet.com/perfumes/halloween/blossom/posters/medium/80107.jpg'},
+      {name:'Halloween Man Rock On',img:'https://img.fragrancenet.com/perfumes/halloween/halloween-man/posters/medium/20052.jpg'},
+    ]
+  },
+  {
+    id:'hugo-boss',name:'Hugo Boss',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/BOSS_logo.svg/320px-BOSS_logo.svg.png',
+    products:[
+      {name:'Boss Bottled 100ML',img:'https://img.fragrancenet.com/perfumes/boss/boss-bottled/posters/medium/20053.jpg'},
+      {name:'Boss Bottled 200ML',img:'https://img.fragrancenet.com/perfumes/boss/boss-bottled/posters/medium/20053.jpg'},
+      {name:'Boss Bottled Night',img:'https://img.fragrancenet.com/perfumes/boss/boss-bottled-night/posters/medium/90281.jpg'},
+      {name:'Boss Bottled Oud',img:'https://img.fragrancenet.com/perfumes/boss/boss-bottled-oud/posters/medium/1001116.jpg'},
+      {name:'Boss Bottled Infinite EDP',img:'https://img.fragrancenet.com/perfumes/boss/boss-bottled-infinite/posters/medium/1007114.jpg'},
+      {name:'The Scent Hombre',img:'https://img.fragrancenet.com/perfumes/boss/boss-the-scent/posters/medium/1002000.jpg'},
+      {name:'Hugo Boss Man',img:'https://img.fragrancenet.com/perfumes/boss/hugo-boss-man/posters/medium/1001117.jpg'},
+      {name:'Boss In Motion',img:'https://img.fragrancenet.com/perfumes/boss/boss-in-motion/posters/medium/30047.jpg'},
+      {name:'Boss Femme EDP',img:'https://img.fragrancenet.com/perfumes/boss/boss-femme/posters/medium/50086.jpg'},
+      {name:'Hugo Boss XY',img:'https://img.fragrancenet.com/perfumes/boss/hugo-xy/posters/medium/50087.jpg'},
+    ]
+  },
+  {
+    id:'issey-miyake',name:'Issey Miyake',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Issey_Miyake_logo.svg/320px-Issey_Miyake_logo.svg.png',
+    products:[
+      {name:'L\'Eau d\'Issey Homme 125ML',img:'https://img.fragrancenet.com/perfumes/issey-miyake/leau-dissey-pour-homme/posters/medium/3077.jpg'},
+      {name:'L\'Eau d\'Issey Homme 200ML',img:'https://img.fragrancenet.com/perfumes/issey-miyake/leau-dissey-pour-homme/posters/medium/3077.jpg'},
+      {name:'Le Sel d\'Issey EDP',img:'https://img.fragrancenet.com/perfumes/issey-miyake/le-sel-dissey/posters/medium/1009513.jpg'},
+      {name:'Le Sel d\'Issey EDT',img:'https://img.fragrancenet.com/perfumes/issey-miyake/le-sel-dissey/posters/medium/1009513.jpg'},
+      {name:'Bleu Astral 125ML',img:'https://img.fragrancenet.com/perfumes/issey-miyake/bleu-astral/posters/medium/1010523.jpg'},
+    ]
+  },
+  {
+    id:'jean-paul',name:'Jean Paul Gaultier',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Jean-Paul_Gaultier_logo.svg/320px-Jean-Paul_Gaultier_logo.svg.png',
+    products:[
+      {name:'Le Mâle Elixir',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/le-male-elixier/posters/medium/1007115.jpg',badge:'Bestseller'},
+      {name:'Le Beau EDT',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/le-beau/posters/medium/1007116.jpg'},
+      {name:'Le Beau Narcisse',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/le-beau-narcisse/posters/medium/1010524.jpg'},
+      {name:'Le Beau Paradise Garden',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/le-beau-paradise-garden/posters/medium/1009514.jpg'},
+      {name:'La Belle',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/la-belle/posters/medium/1006518.jpg'},
+      {name:'Le Belle Paradise Garden',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/la-belle-paradise-garden/posters/medium/1009515.jpg'},
+      {name:'Scandal Absolu Mujer',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/scandal-absolu/posters/medium/1009516.jpg'},
+      {name:'Scandal Intense 100ML',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/scandal-pour-femme/posters/medium/1004528.jpg'},
+      {name:'Scandal Elixir',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/scandal-elixir/posters/medium/1010525.jpg'},
+      {name:'Divine Le Parfum',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/divine/posters/medium/1010526.jpg'},
+      {name:'Classique Mujer 125ML',img:'https://img.fragrancenet.com/perfumes/jean-paul-gaultier/classique/posters/medium/7070.jpg'},
+    ]
+  },
+  {
+    id:'jlo',name:'Jennifer Lopez',
+    logo:'',
+    products:[
+      {name:'Glow',img:'https://img.fragrancenet.com/perfumes/jennifer-lopez/glow/posters/medium/30048.jpg'},
+      {name:'Live',img:'https://img.fragrancenet.com/perfumes/jennifer-lopez/live/posters/medium/70081.jpg'},
+      {name:'Still',img:'https://img.fragrancenet.com/perfumes/jennifer-lopez/still/posters/medium/40074.jpg'},
+      {name:'Live Luxe',img:'https://img.fragrancenet.com/perfumes/jennifer-lopez/live-luxe/posters/medium/90282.jpg'},
+    ]
+  },
+  {
+    id:'lacoste',name:'Lacoste',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Lacoste_logo.svg/320px-Lacoste_logo.svg.png',
+    products:[
+      {name:'L12.12 Blanc 175ML',img:'https://img.fragrancenet.com/perfumes/lacoste/lacoste-blanc/posters/medium/1001118.jpg'},
+      {name:'L12.12 Noir',img:'https://img.fragrancenet.com/perfumes/lacoste/lacoste-noir/posters/medium/1001119.jpg'},
+      {name:'Essential 125ML',img:'https://img.fragrancenet.com/perfumes/lacoste/essential/posters/medium/60063.jpg'},
+      {name:'L\'Homme 100ML',img:'https://img.fragrancenet.com/perfumes/lacoste/lhomme-lacoste/posters/medium/1001120.jpg'},
+      {name:'Touch of Pink',img:'https://img.fragrancenet.com/perfumes/lacoste/touch-of-pink/posters/medium/50088.jpg'},
+      {name:'L12.12 Eau Fraiche',img:'https://img.fragrancenet.com/perfumes/lacoste/eau-fraiche/posters/medium/80108.jpg'},
+    ]
+  },
+  {
+    id:'lancome',name:'Lancôme',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Lanc%C3%B4me_logo.svg/320px-Lanc%C3%B4me_logo.svg.png',
+    products:[
+      {name:'La Vie Est Belle',img:'https://img.fragrancenet.com/perfumes/lancome/la-vie-est-belle/posters/medium/1001121.jpg',badge:'Bestseller'},
+      {name:'La Vie Est Belle 150ML',img:'https://img.fragrancenet.com/perfumes/lancome/la-vie-est-belle/posters/medium/1001121.jpg'},
+      {name:'La Vie Est Belle Iris Absolu',img:'https://img.fragrancenet.com/perfumes/lancome/la-vie-est-belle-iris-absolu/posters/medium/1009517.jpg'},
+      {name:'Idôle 100ML',img:'https://img.fragrancenet.com/perfumes/lancome/idole/posters/medium/1006519.jpg'},
+      {name:'La Nuit Trésor EDP',img:'https://img.fragrancenet.com/perfumes/lancome/la-nuit-tresor/posters/medium/1001122.jpg'},
+      {name:'Miracle',img:'https://img.fragrancenet.com/perfumes/lancome/miracle/posters/medium/20054.jpg'},
+      {name:'Trésor',img:'https://img.fragrancenet.com/perfumes/lancome/tresor/posters/medium/3078.jpg'},
+      {name:'Poème EDP',img:'https://img.fragrancenet.com/perfumes/lancome/poem/posters/medium/7071.jpg'},
+    ]
+  },
+  {
+    id:'lattafa',name:'Lattafa',
+    logo:'',
+    products:[
+      {name:'Yara',img:'https://img.fragrancenet.com/perfumes/lattafa/yara/posters/medium/1007117.jpg',badge:'Bestseller'},
+      {name:'Yara Moi',img:'https://img.fragrancenet.com/perfumes/lattafa/yara-moi/posters/medium/1008505.jpg'},
+      {name:'Yara Candy',img:'https://img.fragrancenet.com/perfumes/lattafa/yara/posters/medium/1007117.jpg'},
+      {name:'Khamrah',img:'https://img.fragrancenet.com/perfumes/lattafa/khamrah/posters/medium/1007118.jpg'},
+      {name:'Her Confession EDP',img:'https://img.fragrancenet.com/perfumes/lattafa/her-confession/posters/medium/1009518.jpg'},
+      {name:'His Confession EDP',img:'https://img.fragrancenet.com/perfumes/lattafa/his-confession/posters/medium/1009519.jpg'},
+      {name:'Haya',img:'https://img.fragrancenet.com/perfumes/lattafa/haya/posters/medium/1009520.jpg'},
+      {name:'Afeef',img:'https://img.fragrancenet.com/perfumes/lattafa/afeef/posters/medium/1007119.jpg'},
+      {name:'Asad Zanzibar',img:'https://img.fragrancenet.com/perfumes/lattafa/asad/posters/medium/1007120.jpg'},
+      {name:'Art of Universe',img:'https://img.fragrancenet.com/perfumes/lattafa/pride-art-of-universe/posters/medium/1009521.jpg'},
+      {name:'Maahir Black',img:'https://img.fragrancenet.com/perfumes/lattafa/maahir-black/posters/medium/1007121.jpg'},
+      {name:'Mayar',img:'https://img.fragrancenet.com/perfumes/lattafa/mayar/posters/medium/1007122.jpg'},
+      {name:'Teriaq',img:'https://img.fragrancenet.com/perfumes/lattafa/teriaq/posters/medium/1007123.jpg'},
+      {name:'Choco Overdose',img:'https://img.fragrancenet.com/perfumes/lattafa/choco-musk/posters/medium/1007124.jpg'},
+    ]
+  },
+  {
+    id:'maison-alhambra',name:'Maison Alhambra',
+    logo:'',
+    products:[
+      {name:'Jean Lowe Azure',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/jean-lowe-azure/posters/medium/1007125.jpg'},
+      {name:'Jean Lowe Vibe',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/jean-lowe-vibe/posters/medium/1007126.jpg'},
+      {name:'Jean Lowe Immortal',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/jean-lowe-immortal/posters/medium/1007127.jpg'},
+      {name:'Glacier Bold',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/glacier-bold/posters/medium/1007128.jpg'},
+      {name:'Pink Shimmer Intense',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/pink-shimmer-intense/posters/medium/1007129.jpg'},
+      {name:'Panther Pour Homme',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/panther-pour-homme/posters/medium/1007130.jpg'},
+      {name:'Victorioso',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/victorioso/posters/medium/1007131.jpg'},
+      {name:'Victorioso Myth',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/victorioso-myth/posters/medium/1007132.jpg'},
+      {name:'Sceptre Malachite',img:'https://img.fragrancenet.com/perfumes/maison-alhambra/sceptre/posters/medium/1009522.jpg'},
+    ]
+  },
+  {
+    id:'marc-jacobs',name:'Marc Jacobs',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Marc_Jacobs_logo.svg/320px-Marc_Jacobs_logo.svg.png',
+    products:[
+      {name:'Daisy 100ML',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/daisy/posters/medium/80109.jpg',badge:'Icónico'},
+      {name:'Daisy Eau So Fresh',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/daisy-eau-so-fresh/posters/medium/90283.jpg'},
+      {name:'Daisy Love',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/daisy-love/posters/medium/1004529.jpg'},
+      {name:'Daisy Love Eau So Sweet',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/daisy-love-eau-so-sweet/posters/medium/1007133.jpg'},
+      {name:'Perfect 100ML',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/perfect/posters/medium/1006520.jpg'},
+      {name:'Perfect Absolute',img:'https://img.fragrancenet.com/perfumes/marc-jacobs/perfect-absolute/posters/medium/1009523.jpg'},
+    ]
+  },
+  {
+    id:'moschino',name:'Moschino',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Moschino_Logo.svg/320px-Moschino_Logo.svg.png',
+    products:[
+      {name:'Toy 2',img:'https://img.fragrancenet.com/perfumes/moschino/toy-2/posters/medium/1004530.jpg'},
+      {name:'Toy 2 Bubblegum',img:'https://img.fragrancenet.com/perfumes/moschino/toy-2-bubblegum/posters/medium/1005532.jpg',badge:'Bestseller'},
+      {name:'Toy 2 Pearl',img:'https://img.fragrancenet.com/perfumes/moschino/toy-2-pearl/posters/medium/1007134.jpg'},
+      {name:'Toy Boy',img:'https://img.fragrancenet.com/perfumes/moschino/toy-boy/posters/medium/1006521.jpg'},
+      {name:'Toy Boy 2',img:'https://img.fragrancenet.com/perfumes/moschino/toy-boy-2/posters/medium/1009524.jpg'},
+      {name:'Fresh Couture',img:'https://img.fragrancenet.com/perfumes/moschino/fresh-couture/posters/medium/1001123.jpg'},
+      {name:'Fresh Gold',img:'https://img.fragrancenet.com/perfumes/moschino/fresh-couture-gold/posters/medium/1004531.jpg'},
+      {name:'Fresh Pink',img:'https://img.fragrancenet.com/perfumes/moschino/fresh-couture-pink/posters/medium/1004532.jpg'},
+      {name:'Love Love',img:'https://img.fragrancenet.com/perfumes/moschino/love-love/posters/medium/50089.jpg'},
+      {name:'Funny',img:'https://img.fragrancenet.com/perfumes/moschino/funny/posters/medium/60064.jpg'},
+      {name:'Uomo',img:'https://img.fragrancenet.com/perfumes/moschino/uomo/posters/medium/80110.jpg'},
+    ]
+  },
+  {
+    id:'mont-blanc',name:'Mont Blanc',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Montblanc_Logo.svg/320px-Montblanc_Logo.svg.png',
+    products:[
+      {name:'Legend EDT 100ML',img:'https://img.fragrancenet.com/perfumes/mont-blanc/legend/posters/medium/90284.jpg'},
+      {name:'Legend 200ML',img:'https://img.fragrancenet.com/perfumes/mont-blanc/legend/posters/medium/90284.jpg'},
+      {name:'Legend EDP',img:'https://img.fragrancenet.com/perfumes/mont-blanc/legend-edp/posters/medium/1001124.jpg'},
+      {name:'Explorer',img:'https://img.fragrancenet.com/perfumes/mont-blanc/explorer/posters/medium/1005533.jpg'},
+      {name:'Legend Spirit',img:'https://img.fragrancenet.com/perfumes/mont-blanc/legend-spirit/posters/medium/1001125.jpg'},
+    ]
+  },
+  {
+    id:'nautica',name:'Nautica',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Nautica_logo.svg/320px-Nautica_logo.svg.png',
+    products:[
+      {name:'Voyage 100ML',img:'https://img.fragrancenet.com/perfumes/nautica/voyage/posters/medium/60065.jpg',badge:'Bestseller'},
+      {name:'Voyage 200ML',img:'https://img.fragrancenet.com/perfumes/nautica/voyage/posters/medium/60065.jpg'},
+      {name:'Voyage Heritage',img:'https://img.fragrancenet.com/perfumes/nautica/voyage-heritage/posters/medium/1007135.jpg'},
+      {name:'Classic',img:'https://img.fragrancenet.com/perfumes/nautica/classic/posters/medium/3079.jpg'},
+      {name:'Blue',img:'https://img.fragrancenet.com/perfumes/nautica/nautica-blue/posters/medium/20055.jpg'},
+      {name:'Sport',img:'https://img.fragrancenet.com/perfumes/nautica/sport/posters/medium/1001126.jpg'},
+    ]
+  },
+  {
+    id:'paco-rabanne',name:'Paco Rabanne',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Paco_Rabanne_logo.svg/320px-Paco_Rabanne_logo.svg.png',
+    products:[
+      {name:'Invictus 100ML',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/invictus/posters/medium/1001127.jpg',badge:'Bestseller'},
+      {name:'Invictus Victory',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/invictus-victory/posters/medium/1007136.jpg'},
+      {name:'Invictus Elixir',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/invictus-elixir/posters/medium/1009525.jpg'},
+      {name:'One Million EDT',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/1-million/posters/medium/90285.jpg'},
+      {name:'One Million Parfum',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/1-million-parfum/posters/medium/1004533.jpg'},
+      {name:'Phantom EDT',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/phantom/posters/medium/1007137.jpg'},
+      {name:'Phantom Parfum',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/phantom-parfum/posters/medium/1009526.jpg'},
+      {name:'Phantom Intense',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/phantom-intense/posters/medium/1009527.jpg'},
+      {name:'Phantom Legion',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/phantom-legion/posters/medium/1009528.jpg'},
+      {name:'Lady Million',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/lady-million/posters/medium/90286.jpg'},
+      {name:'Lady Million Royal',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/lady-million-royal/posters/medium/1009529.jpg'},
+      {name:'Olympéa',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/olympea/posters/medium/1002001.jpg'},
+      {name:'Fame The Couture',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/fame/posters/medium/1009530.jpg'},
+      {name:'Night Elixir',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/night-elixir/posters/medium/1009531.jpg'},
+      {name:'Phantom in Red',img:'https://img.fragrancenet.com/perfumes/paco-rabanne/phantom-in-red/posters/medium/1009532.jpg'},
+    ]
+  },
+  {
+    id:'paris-hilton',name:'Paris Hilton',
+    logo:'',
+    products:[
+      {name:'Heiress',img:'https://img.fragrancenet.com/perfumes/paris-hilton/heiress/posters/medium/70082.jpg'},
+      {name:'Can Can Burlesque',img:'https://img.fragrancenet.com/perfumes/paris-hilton/can-can-burlesque/posters/medium/90287.jpg'},
+      {name:'Electrify',img:'https://img.fragrancenet.com/perfumes/paris-hilton/electrify/posters/medium/1007138.jpg'},
+      {name:'Gold Rush',img:'https://img.fragrancenet.com/perfumes/paris-hilton/gold-rush/posters/medium/1004534.jpg'},
+      {name:'Pink Rush',img:'https://img.fragrancenet.com/perfumes/paris-hilton/pink-rush/posters/medium/1007139.jpg'},
+      {name:'Rose Rush',img:'https://img.fragrancenet.com/perfumes/paris-hilton/rose-rush/posters/medium/1007140.jpg'},
+    ]
+  },
+  {
+    id:'perry-ellis',name:'Perry Ellis',
+    logo:'',
+    products:[
+      {name:'360 Clasico Mujer',img:'https://img.fragrancenet.com/perfumes/perry-ellis/360-for-women/posters/medium/7072.jpg'},
+      {name:'360 Coral',img:'https://img.fragrancenet.com/perfumes/perry-ellis/360-coral/posters/medium/1001128.jpg'},
+      {name:'360 Purple',img:'https://img.fragrancenet.com/perfumes/perry-ellis/360-purple/posters/medium/80111.jpg'},
+      {name:'360 Pink',img:'https://img.fragrancenet.com/perfumes/perry-ellis/360-pink/posters/medium/80112.jpg'},
+      {name:'360 White For Men',img:'https://img.fragrancenet.com/perfumes/perry-ellis/360-for-men/posters/medium/7073.jpg'},
+      {name:'18 Intense 100ML',img:'https://img.fragrancenet.com/perfumes/perry-ellis/18-for-men/posters/medium/90288.jpg'},
+      {name:'Portfolio',img:'https://img.fragrancenet.com/perfumes/perry-ellis/portfolio-for-men/posters/medium/7074.jpg'},
+    ]
+  },
+  {
+    id:'prada',name:'Prada',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Prada_logo.svg/320px-Prada_logo.svg.png',
+    products:[
+      {name:'Luna Rossa Ocean EDP',img:'https://img.fragrancenet.com/perfumes/prada/luna-rossa-ocean/posters/medium/1007141.jpg'},
+      {name:'Luna Rossa Carbon',img:'https://img.fragrancenet.com/perfumes/prada/luna-rossa-carbon/posters/medium/1004535.jpg'},
+      {name:'L\'Homme L\'Eau',img:'https://img.fragrancenet.com/perfumes/prada/lhomme-leau/posters/medium/1004536.jpg'},
+      {name:'Paradoxe 100ML EDP',img:'https://img.fragrancenet.com/perfumes/prada/paradoxe/posters/medium/1009533.jpg',badge:'Nuevo'},
+      {name:'Prada Ocean Le Parfum',img:'https://img.fragrancenet.com/perfumes/prada/luna-rossa-ocean/posters/medium/1007141.jpg'},
+    ]
+  },
+  {
+    id:'ralph-lauren',name:'Ralph Lauren',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Ralph_Lauren_Corporation_Logo.svg/320px-Ralph_Lauren_Corporation_Logo.svg.png',
+    products:[
+      {name:'Polo Red',img:'https://img.fragrancenet.com/perfumes/ralph-lauren/polo-red/posters/medium/1001129.jpg'},
+      {name:'Polo Ultra Blue',img:'https://img.fragrancenet.com/perfumes/ralph-lauren/polo-ultra-blue/posters/medium/1001130.jpg'},
+      {name:'Ralph\'s Club EDP',img:'https://img.fragrancenet.com/perfumes/ralph-lauren/ralphs-club/posters/medium/1007142.jpg'},
+      {name:'Polo Sport Fresh',img:'https://img.fragrancenet.com/perfumes/ralph-lauren/polo-sport/posters/medium/7075.jpg'},
+      {name:'Turquesa',img:'https://img.fragrancenet.com/perfumes/ralph-lauren/polo-blue/posters/medium/30049.jpg'},
+    ]
+  },
+  {
+    id:'rasasi',name:'Rasasi',
+    logo:'',
+    products:[
+      {name:'Hawas Ice EDP',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-ice/posters/medium/1007143.jpg',badge:'Bestseller'},
+      {name:'Hawas Atlantis',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-atlantis/posters/medium/1009534.jpg'},
+      {name:'Hawas Viper',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-viper/posters/medium/1009535.jpg'},
+      {name:'Hawas Malibu',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-malibu/posters/medium/1007144.jpg'},
+      {name:'Hawas Tropical',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-tropical/posters/medium/1007145.jpg'},
+      {name:'Hawas Fire EDP',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-fire/posters/medium/1007146.jpg'},
+      {name:'Hawas Mujer',img:'https://img.fragrancenet.com/perfumes/rasasi/hawas-for-women/posters/medium/1007147.jpg'},
+    ]
+  },
+  {
+    id:'tommy',name:'Tommy Hilfiger',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Tommy_Hilfiger_logo.svg/320px-Tommy_Hilfiger_logo.svg.png',
+    products:[
+      {name:'Tommy Girl',img:'https://img.fragrancenet.com/perfumes/tommy-hilfiger/tommy-girl/posters/medium/7076.jpg'},
+      {name:'Tommy Men Now',img:'https://img.fragrancenet.com/perfumes/tommy-hilfiger/tommy/posters/medium/7077.jpg'},
+      {name:'Tommy Impact',img:'https://img.fragrancenet.com/perfumes/tommy-hilfiger/impact/posters/medium/1007148.jpg',badge:'Nuevo'},
+      {name:'Tommy Impact Spark',img:'https://img.fragrancenet.com/perfumes/tommy-hilfiger/impact-spark/posters/medium/1009536.jpg'},
+      {name:'Tommy Men 200ML',img:'https://img.fragrancenet.com/perfumes/tommy-hilfiger/tommy/posters/medium/7077.jpg'},
+    ]
+  },
+  {
+    id:'tous',name:'Tous',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Tous_logo.svg/320px-Tous_logo.svg.png',
+    products:[
+      {name:'Love Me',img:'https://img.fragrancenet.com/perfumes/tous/love-me/posters/medium/1007149.jpg'},
+      {name:'Love Me The Onix Parfum',img:'https://img.fragrancenet.com/perfumes/tous/love-me-the-onix-parfum/posters/medium/1009537.jpg'},
+      {name:'Your Moments',img:'https://img.fragrancenet.com/perfumes/tous/your-moments/posters/medium/1001131.jpg'},
+      {name:'L\'Eau',img:'https://img.fragrancenet.com/perfumes/tous/leau/posters/medium/1001132.jpg'},
+      {name:'Touch Clásico Mujer',img:'https://img.fragrancenet.com/perfumes/tous/touch/posters/medium/50090.jpg'},
+      {name:'Dorado EDP',img:'https://img.fragrancenet.com/perfumes/tous/tous-gold/posters/medium/80113.jpg'},
+      {name:'Gems Power',img:'https://img.fragrancenet.com/perfumes/tous/gems-power/posters/medium/1007150.jpg'},
+      {name:'Neon Candy',img:'https://img.fragrancenet.com/perfumes/tous/neon-candy/posters/medium/1007151.jpg'},
+      {name:'Kids Niña',img:'https://img.fragrancenet.com/perfumes/tous/kids-girl/posters/medium/80114.jpg'},
+    ]
+  },
+  {
+    id:'valentino',name:'Valentino',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Valentino_logo.svg/320px-Valentino_logo.svg.png',
+    products:[
+      {name:'Uomo Born in Roma',img:'https://img.fragrancenet.com/perfumes/valentino/uomo-born-in-roma/posters/medium/1005534.jpg',badge:'Bestseller'},
+      {name:'Uomo Born in Roma Intense',img:'https://img.fragrancenet.com/perfumes/valentino/uomo-born-in-roma-intense/posters/medium/1007152.jpg'},
+      {name:'Uomo Coral Fantasy',img:'https://img.fragrancenet.com/perfumes/valentino/uomo-coral-fantasy/posters/medium/1009538.jpg'},
+      {name:'Uomo Born in Roma Extradose',img:'https://img.fragrancenet.com/perfumes/valentino/uomo-born-in-roma-extradose/posters/medium/1010527.jpg'},
+      {name:'Donna Born in Roma',img:'https://img.fragrancenet.com/perfumes/valentino/donna-born-in-roma/posters/medium/1005535.jpg'},
+      {name:'Donna Coral Fantasy',img:'https://img.fragrancenet.com/perfumes/valentino/donna-coral-fantasy/posters/medium/1009539.jpg'},
+      {name:'Donna Born in Roma Extradose',img:'https://img.fragrancenet.com/perfumes/valentino/donna-born-in-roma-extradose/posters/medium/1010528.jpg'},
+      {name:'Donna Purple Melancholia',img:'https://img.fragrancenet.com/perfumes/valentino/donna-born-in-roma-purple-melancholia/posters/medium/1010529.jpg'},
+    ]
+  },
+  {
+    id:'versace',name:'Versace',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Versace_logo.svg/320px-Versace_logo.svg.png',
+    products:[
+      {name:'Eros EDT',img:'https://img.fragrancenet.com/perfumes/versace/eros/posters/medium/1001133.jpg',badge:'Bestseller'},
+      {name:'Eros EDP',img:'https://img.fragrancenet.com/perfumes/versace/eros-edp/posters/medium/1004537.jpg'},
+      {name:'Eros Flame',img:'https://img.fragrancenet.com/perfumes/versace/eros-flame/posters/medium/1005536.jpg'},
+      {name:'Eros Parfum',img:'https://img.fragrancenet.com/perfumes/versace/eros-parfum/posters/medium/1007153.jpg'},
+      {name:'Eros Energy EDP',img:'https://img.fragrancenet.com/perfumes/versace/eros-energy/posters/medium/1009540.jpg'},
+      {name:'Eros Pour Femme EDP',img:'https://img.fragrancenet.com/perfumes/versace/eros-pour-femme/posters/medium/1001134.jpg'},
+      {name:'Dylan Blue Pour Homme 200ML',img:'https://img.fragrancenet.com/perfumes/versace/dylan-blue/posters/medium/1002002.jpg'},
+      {name:'Dylan Blue Pour Femme',img:'https://img.fragrancenet.com/perfumes/versace/dylan-blue-pour-femme/posters/medium/1003007.jpg'},
+      {name:'Dylan Blush Pink',img:'https://img.fragrancenet.com/perfumes/versace/dylan-blue-pour-femme/posters/medium/1003007.jpg'},
+      {name:'Dylan Turquoise Mujer',img:'https://img.fragrancenet.com/perfumes/versace/dylan-turquoise/posters/medium/1007154.jpg'},
+      {name:'Dylan Purple',img:'https://img.fragrancenet.com/perfumes/versace/dylan-purple/posters/medium/1009541.jpg'},
+      {name:'Bright Crystal Absolu',img:'https://img.fragrancenet.com/perfumes/versace/bright-crystal-absolu/posters/medium/1001135.jpg'},
+      {name:'Bright Crystal Parfum',img:'https://img.fragrancenet.com/perfumes/versace/bright-crystal-parfum/posters/medium/1009542.jpg'},
+      {name:'Eau Fraiche Extreme',img:'https://img.fragrancenet.com/perfumes/versace/eau-fraiche-extreme/posters/medium/1009543.jpg'},
+      {name:'Yellow Diamond',img:'https://img.fragrancenet.com/perfumes/versace/yellow-diamond/posters/medium/90289.jpg'},
+      {name:'Pour Homme 100ML',img:'https://img.fragrancenet.com/perfumes/versace/versace-pour-homme/posters/medium/50091.jpg'},
+    ]
+  },
+  {
+    id:'victoria-secret',name:"Victoria's Secret",
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Victoria%27s_Secret_Logo.svg/320px-Victoria%27s_Secret_Logo.svg.png',
+    products:[
+      {name:'Bombshell EDP',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/bombshell/posters/medium/1001136.jpg',badge:'Bestseller'},
+      {name:'Bombshell Wild Flower',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/bombshell-wild-flower/posters/medium/1009544.jpg'},
+      {name:'First Love EDP',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/first-love/posters/medium/1009545.jpg'},
+      {name:'Angel Gold EDP',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/angel-gold/posters/medium/1007155.jpg'},
+      {name:'Very Sexy Oasis',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/very-sexy-oasis/posters/medium/1009546.jpg'},
+      {name:'Just a Kiss',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/just-a-kiss/posters/medium/1007156.jpg'},
+      {name:'Up All Night EDP',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/up-all-night/posters/medium/1007157.jpg'},
+      {name:'Bombshell Seduction',img:'https://img.fragrancenet.com/perfumes/victoria-s-secret/bombshell-seduction/posters/medium/1009547.jpg'},
+    ]
+  },
+  {
+    id:'ysl',name:'Yves Saint Laurent',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/YSL_monogram.svg/320px-YSL_monogram.svg.png',
+    products:[
+      {name:'Black Opium EDP',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/black-opium/posters/medium/1001137.jpg',badge:'Bestseller'},
+      {name:'Black Opium Glitter',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/black-opium/posters/medium/1001137.jpg'},
+      {name:'Libre EDP',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/libre/posters/medium/1006522.jpg'},
+      {name:'Mon Paris',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/mon-paris/posters/medium/1003008.jpg'},
+      {name:'Myself L\'Absolu Parfum',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/myself/posters/medium/1009548.jpg'},
+      {name:'Myself EDP Men',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/myself-for-men/posters/medium/1009549.jpg'},
+      {name:'Y EDP',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/y/posters/medium/1004538.jpg'},
+      {name:'Y EDP Intense',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/y-edp-intense/posters/medium/1007158.jpg'},
+      {name:'La Nuit de L\'Homme',img:'https://img.fragrancenet.com/perfumes/yves-saint-laurent/la-nuit-de-lhomme/posters/medium/80115.jpg'},
+    ]
+  },
+  {
+    id:'otros',name:'Otras Marcas',
+    logo:'',
+    products:[
+      {name:'Azzaro Chrome 100ML',img:'https://img.fragrancenet.com/perfumes/azzaro/chrome/posters/medium/7062.jpg'},
+      {name:'Davidoff Cool Water H',img:'https://img.fragrancenet.com/perfumes/davidoff/cool-water-for-men/posters/medium/3080.jpg'},
+      {name:'Viktor & Rolf Spicebomb',img:'https://img.fragrancenet.com/perfumes/viktor-rolf/spicebomb/posters/medium/1001138.jpg'},
+      {name:'Viktor & Rolf Bonbon',img:'https://img.fragrancenet.com/perfumes/viktor-rolf/bon-bon/posters/medium/1002003.jpg'},
+      {name:'Mancera Cedrat Boisé',img:'https://img.fragrancenet.com/perfumes/mancera/cedrat-boise/posters/medium/1001139.jpg'},
+      {name:'Mancera Instant Crush',img:'https://img.fragrancenet.com/perfumes/mancera/instant-crush/posters/medium/1007159.jpg'},
+      {name:'Mancera Red Tobacco',img:'https://img.fragrancenet.com/perfumes/mancera/red-tobacco/posters/medium/1004539.jpg'},
+      {name:'Kenzo Flower By Kenzo EDP',img:'https://img.fragrancenet.com/perfumes/kenzo/flower-by-kenzo/posters/medium/20056.jpg'},
+      {name:'Lolita Lempika',img:'https://img.fragrancenet.com/perfumes/lolita-lempicka/lolita-lempicka/posters/medium/10076.jpg'},
+      {name:'Nina Ricci Nina Le Parfum',img:'https://img.fragrancenet.com/perfumes/nina-ricci/nina-le-parfum/posters/medium/1001140.jpg'},
+      {name:'John Varvatos EDT',img:'https://img.fragrancenet.com/perfumes/john-varvatos/john-varvatos/posters/medium/70083.jpg'},
+      {name:'Joop Homme 125ML',img:'https://img.fragrancenet.com/perfumes/joop/joop-homme/posters/medium/3081.jpg'},
+      {name:'Moschino Funny',img:'https://img.fragrancenet.com/perfumes/moschino/funny/posters/medium/60064.jpg'},
+      {name:'Michael Kors Pour Homme',img:'https://img.fragrancenet.com/perfumes/michael-kors/pour-homme/posters/medium/1007160.jpg'},
+      {name:'Narciso Rodriguez For Her',img:'https://img.fragrancenet.com/perfumes/narciso-rodriguez/for-her/posters/medium/50092.jpg'},
+      {name:'Prada L\'Homme L\'Eau',img:'https://img.fragrancenet.com/perfumes/prada/lhomme/posters/medium/1003009.jpg'},
+      {name:'Game of Spades All In',img:'https://img.fragrancenet.com/perfumes/game-of-spades/all-in/posters/medium/1009550.jpg'},
+      {name:'Jo Milano Argentina',img:'https://img.fragrancenet.com/perfumes/jo-milano/argentina/posters/medium/1007161.jpg'},
+      {name:'Britney Spears Fantasy',img:'https://img.fragrancenet.com/perfumes/britney-spears/fantasy/posters/medium/60066.jpg'},
+      {name:'Orientica Amber Rouge',img:'https://img.fragrancenet.com/perfumes/orientica/amber-rouge/posters/medium/1007162.jpg'},
+      {name:'Orientica Royal Amber',img:'https://img.fragrancenet.com/perfumes/orientica/royal-amber/posters/medium/1007163.jpg'},
+    ]
+  },
+];
+
+// Build catalog
+function buildCatalog(filter='all', search=''){
+  const container = document.getElementById('catalogContainer');
+  container.innerHTML='';
+  const q = search.toLowerCase().trim();
+  brands.forEach(brand=>{
+    if(filter!=='all' && brand.id!==filter) return;
+    const prods = brand.products.filter(p=> !q || p.name.toLowerCase().includes(q) || brand.name.toLowerCase().includes(q));
+    if(!prods.length) return;
+    const section=document.createElement('div');
+    section.className='brand-section';
+    const logoHTML = brand.logo
+      ? `<img src="${brand.logo}" alt="${brand.name}" class="brand-logo-img" onerror="this.style.display='none'">`
+      : '';
+    section.innerHTML=`
+      <div class="brand-header">
+        ${logoHTML}
+        <span class="brand-name">${brand.name}</span>
+        <span class="brand-count">${prods.length} producto${prods.length!==1?'s':''}</span>
+      </div>
+      <div class="products-grid">
+        ${prods.map(p=>`
+          <div class="pc" onclick="window.open('https://wa.me/50688422928?text=Hola!%20Me%20interesa%20el%20perfume:%20${encodeURIComponent(p.name)}','_blank')">
+            ${p.badge?`<span class="pc-badge">${p.badge}</span>`:''}
+            <div class="pc-img-wrap">
+              <img src="${p.img}" alt="${p.name}" class="pc-img" loading="lazy"
+                onerror="this.parentElement.innerHTML='<span class=\\'pc-img-placeholder\\'>◈</span>'">
+            </div>
+            <div class="pc-body">
+              <div class="pc-name">${p.name}</div>
+              <div class="pc-sub">Consultar disponibilidad</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(section);
+  });
+  if(!container.children.length){
+    container.innerHTML=`<div style="text-align:center;padding:4rem;color:var(--light);font-size:.9rem;font-weight:200">No se encontraron resultados para "<em>${search}</em>"</div>`;
+  }
+}
+
+// Filter buttons
+let activeFilter='all';
+document.querySelectorAll('.fbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter=btn.dataset.filter;
+    buildCatalog(activeFilter, document.getElementById('searchInput').value);
+  });
+});
+
+// Search
+let searchTimer;
+document.getElementById('searchInput').addEventListener('input',e=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    buildCatalog(activeFilter, e.target.value);
+  },300);
+});
+
+buildCatalog();
+
+// Custom cursor
+const cur=document.getElementById('cur');
+const curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-3}px,${my-3}px)`});
+(function animR(){rx+=(mx-rx-14)*.12;ry+=(my-ry-14)*.12;curR.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(animR)})();
+
+// Nav scroll
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60));
+
+// Reveal
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
